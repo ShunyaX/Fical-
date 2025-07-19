@@ -1,95 +1,48 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
 
-export default function Home() {
+import React from 'react';
+import Latest from './components/latest';
+import { useRouter } from 'next/navigation';
+
+
+
+export default async function Home() {
+  const router = useRouter();
+  const res = await fetch('https://api.jikan.moe/v4/anime/');
+  const data = await res.json();
+   const animeList = data.data;
+  
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className=' min-h-screen px-3 py-10 scroll-smooth ' >
+      <section className="px-10 py-7">
+      <Latest/>
+      <div>
+        <h1 className="text-3xl font-bold text-white mt-10 font-pop">Trending:</h1>
+        <div className = ' rounded-2xl justify-start items-start  mt-10 whitespace-nowrap overflow-scroll scrollbar-hide scroll smooth'>
+          <div className='flex gap-6 snap-proximity '>
+          {animeList.map((a:any)=> {
+            return (
+              <button className='w-52 inline-block flex-shrink-0 gap-5 justify-start snap-center' key={a.mal_id} onClick={() => router.push(`anime/${a.mal_id}`)}>
+              <img src={a.images.jpg.large_image_url} alt={a.title} className='w-full h-80 rounded-2xl object-cover' />
+              <p className='text-white px-2 text-lg truncate font-pop mt-2'>{a.title}</p>
+              <div className='mt-1 text-sm'>
+              <p className=" text-gray-400">
+                  {a.genres && a.genres.length > 0 ? a.genres[0].name : "-"}
+               </p>
+              <span className='text-yellow-400 bg-grey-600 px-3 font-pop text-xs mt-2'>⭐{a.score?a.score:"-"}</span>
+               </div>
+              </button>
+              
+            );
+            })}
+            </div>
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        
+      </div>
+      </section>
+      
+
+     </div>
   );
 }
