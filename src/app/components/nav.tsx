@@ -1,7 +1,7 @@
 'use client'
 import React from "react";
 import { useRouter } from "next/navigation";
-import { useState, } from "react";
+import Link from "next/link";
 
 export default function Nav() {
   const router = useRouter();
@@ -14,17 +14,17 @@ export default function Nav() {
     <div className="p-4 px-10">
     <nav className="bg-[#8A0000] rounded-2xl drop-shadow-xl p-3 flex justify-between items-center shadow-md">
       <div className="text-white md:text-2xl text-xl font-pop">
-        <a href="/" className="md:text-3xl text-xl">F</a>
+        <Link href="/" className="md:text-3xl text-xl">F</Link>
       </div>
       <ul className="space-x-4 hidden md:flex font-pop">
         <li>
-          <a href="/movies" className="text-white hover:text-gray-300">Movies</a>
+          <Link href="/movies" className="text-white hover:text-gray-300">Movies</Link>
         </li>
         <li>
-          <a href="/about" className="text-white hover:text-gray-300">About</a>
+          <Link href="/about" className="text-white hover:text-gray-300">About</Link>
         </li>
         <li>
-          <a href="/contact" className="text-white hover:text-gray-300">Contact</a>
+          <Link href="/contact" className="text-white hover:text-gray-300">Contact</Link>
         </li>
       </ul>
       <div className="flex items-center space-x-4">
