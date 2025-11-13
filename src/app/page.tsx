@@ -1,6 +1,6 @@
 import React from 'react';
-import Latest from './components/Latest';
-import Animelist from './components/Animelist';
+import Latest from './_components/Latest';
+import Animelist from './_components/Animelist';
 import connect from './lib/config';
 
 export const metadata = {

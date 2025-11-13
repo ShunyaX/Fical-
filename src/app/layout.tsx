@@ -1,6 +1,6 @@
   import type { Metadata } from "next";
   import { Nunito,Karla,Poppins } from "next/font/google";
-  import Nav from "./components/nav";
+  import Nav from "./_components/nav";
       
 
   import "./globals.css";

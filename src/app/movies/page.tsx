@@ -1,5 +1,5 @@
 import React from 'react';
-import Movielist from '../components/movielist';
+import Movielist from '../_components/movielist';
 
 
 
