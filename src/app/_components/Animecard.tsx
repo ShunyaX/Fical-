@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { decodeBase64 } from 'bcryptjs';
+
 
 interface AnimeCardProps {
     mal_id: number;
@@ -23,9 +23,8 @@ interface AnimeCardProps {
 }
 
 
-export default function Animecard({anime,heading,more}:{anime: AnimeCardProps, heading?: string, more?: () => {}}) {
+export default function Animecard({anime,heading,more}:{anime: AnimeCardProps, heading?: string, more?: () => void}) {
   const router = useRouter();
-  const[load,setload] = useState(false);
 
   const handlePlayClick = (anime: AnimeCardProps) => {
     router.push(`/anime/${anime.mal_id}`);
@@ -47,7 +46,6 @@ export default function Animecard({anime,heading,more}:{anime: AnimeCardProps, h
           height={300} 
           src={anime.images.jpg.large_image_url} 
           alt={anime.title} 
-          onLoad={() => setload(false)}
           className='w-full h-full object-cover transition-transform duration-300 group-hover:scale-105' 
         />
       </span>
@@ -67,9 +65,9 @@ export default function Animecard({anime,heading,more}:{anime: AnimeCardProps, h
 
         <div className='absolute bottom-3 left-2 flex gap-3'>  
       <button>
-        <img src="/play.png" alt="Play" onClick={() =>handlePlayClick(anime)} className="w-6 h-6 transition duration-200 hover:brightness-110 hover:saturate-200 hover:invert hover:sepia hover:hue-rotate-20" />
+        <Image src="/play.png" alt="Play" onClick={() =>handlePlayClick(anime)} className="w-6 h-6 transition duration-200 hover:brightness-110 hover:saturate-200 hover:invert hover:sepia hover:hue-rotate-20" />
       </button>
-      <button><img src="/add.png" alt="Add" className="w-6 h-6 transition duration-200 hover:brightness-110 hover:saturate-200 hover:invert hover:sepia hover:hue-rotate-20
+      <button><Image src="/add.png" alt="Add" className="w-6 h-6 transition duration-200 hover:brightness-110 hover:saturate-200 hover:invert hover:sepia hover:hue-rotate-20
       " /></button>
        </div>
         </div>

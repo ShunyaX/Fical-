@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, KeyboardEvent } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Search() {
   const router = useRouter();
@@ -72,7 +72,7 @@ export default function Search() {
             />
 
             <div className="relative z-10 flex justify-center items-center md:h-48 h-38 bg-black/10">
-              <img
+              <Image
                 src={anime.images.jpg.large_image_url}
                 alt={anime.title}
                 className="object-contain h-full"

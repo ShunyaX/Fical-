@@ -1,4 +1,3 @@
-import React from 'react'
 import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
 import { User } from '@/app/lib/models/userModel';

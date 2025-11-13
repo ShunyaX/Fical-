@@ -2,6 +2,7 @@
 import React from 'react'
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function Signup() {
   const [email, setEmail] = useState('');
@@ -55,7 +56,7 @@ export default function Signup() {
 
                 { done && (
                   <>
-                    <img src="/success.png" alt="Success" width={100} height={100} className='w-24 h-24 mt-10' />
+                    <Image src="/success.png" alt="Success" width={100} height={100} className='w-24 h-24 mt-10' />
                     <p className='text-white'>Signup successful! You can now log in.</p>
                   </>
                 )}

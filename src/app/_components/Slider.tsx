@@ -10,7 +10,21 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
-export default function Slider({anime}:{anime:any[]}) {    
+type Anime = {
+  mal_id: number;
+  title: string;
+  images: {
+    jpg: {
+      large_image_url: string;
+    };
+  };
+  genres: { name: string }[];
+  score?: number;
+  synopsis?: string;
+};
+
+
+export default function Slider({anime}:{anime: Anime[]}) {    
   const router = useRouter();
     return (
       
@@ -39,7 +53,7 @@ export default function Slider({anime}:{anime:any[]}) {
           },
         }}
       >
-        {anime.map((anime: any, idx: number) => (
+        {anime.map((anime: Anime, idx: number) => (
           <SwiperSlide key={idx} onClick={() => router.push(`/anime/${anime.mal_id}`)}>
             <section className="overflow-hidden md:p-6 relative rounded-3xl h-[470px] md:h-[400px] md:w-[860px] flex gap-8 justify-between max-w-6xl mx-auto cursor-pointer ">
             <div className='absolute inset-0 w-full h-full -z-10'>

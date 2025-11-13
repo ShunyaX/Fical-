@@ -2,7 +2,6 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
-import { set } from "mongoose";
 import { motion, AnimatePresence } from "framer-motion";
 
 const slideLeft = {
@@ -61,7 +60,7 @@ export default function Login() {
       } else {
         router.push("/");
       }
-    } catch (err) {
+    } catch (error) {
       setError("Something went wrong. Try again.");
       setLoading(false);
     }

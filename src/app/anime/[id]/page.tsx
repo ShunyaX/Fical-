@@ -1,7 +1,5 @@
 
     import Animeid from "@/app/_components/Animeid";
-    import Image from "next/image";
-    import { useState } from "react";
     import React from 'react'
 
   interface Props {

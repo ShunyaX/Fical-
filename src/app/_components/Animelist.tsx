@@ -1,10 +1,8 @@
 'use client'
 import React from 'react'
 import Animecard from './Animecard';
-import Link from 'next/link';
 import Pulse from './Pulse';
 import { useRouter } from 'next/navigation';
-import { time } from 'console';
 
 interface AnimeCardProps {
     mal_id: number;
