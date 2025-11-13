@@ -1,48 +1,62 @@
-'use client';
-
 import React from 'react';
-import Latest from './components/latest';
-import { useRouter } from 'next/navigation';
+import Latest from './components/Latest';
+import Animelist from './components/Animelist';
+import connect from './lib/config';
 
+export const metadata = {
+  title: "Fical - Watch Anime",
+  description: "Fical",
+};
 
+// ✔ STEP 1: Fetch all anime at once
+async function getAllAnime() {
+  const urls = {
+    spring: "https://api.jikan.moe/v4/seasons/2018/spring?sfw",
+    airing: "https://api.jikan.moe/v4/seasons/now?sfw",
+    trending: "https://api.jikan.moe/v4/top/anime?sfw",
+    upcoming: "https://api.jikan.moe/v4/seasons/upcoming?sfw",
+    sfw: "https://api.jikan.moe/v4/anime?sfw",
+  };
 
+  // 5 API calls ek saath
+  const responses = await Promise.all(
+    Object.values(urls).map((url) => fetch(url).then((r) => r.json()))
+  );
+
+  return {
+    spring: responses[0].data,
+    airing: responses[1].data,
+    trending: responses[2].data,
+    upcoming: responses[3].data,
+    sfw: responses[4].data,
+  };
+}
+
+// ✔ STEP 2: HomePage
 export default async function Home() {
-  const router = useRouter();
-  const res = await fetch('https://api.jikan.moe/v4/anime/');
-  const data = await res.json();
-   const animeList = data.data;
-  
+
+  connect();
+
+  // Get all categories here
+  const { spring, airing, trending, upcoming, sfw } = await getAllAnime();
+
   return (
-    <div className=' min-h-screen px-3 py-10 scroll-smooth ' >
-      <section className="px-10 py-7">
-      <Latest/>
-      <div>
-        <h1 className="text-3xl font-bold text-white mt-10 font-pop">Trending:</h1>
-        <div className = ' rounded-2xl justify-start items-start  mt-10 whitespace-nowrap overflow-scroll scrollbar-hide scroll smooth'>
-          <div className='flex gap-6 snap-proximity '>
-          {animeList.map((a:any)=> {
-            return (
-              <button className='w-52 inline-block flex-shrink-0 gap-5 justify-start snap-center' key={a.mal_id} onClick={() => router.push(`anime/${a.mal_id}`)}>
-              <img src={a.images.jpg.large_image_url} alt={a.title} className='w-full h-80 rounded-2xl object-cover' />
-              <p className='text-white px-2 text-lg truncate font-pop mt-2'>{a.title}</p>
-              <div className='mt-1 text-sm'>
-              <p className=" text-gray-400">
-                  {a.genres && a.genres.length > 0 ? a.genres[0].name : "-"}
-               </p>
-              <span className='text-yellow-400 bg-grey-600 px-3 font-pop text-xs mt-2'>⭐{a.score?a.score:"-"}</span>
-               </div>
-              </button>
-              
-            );
-            })}
-            </div>
+    <div className='min-h-screen'>
 
-        </div>
-        
+      {/* TOP SECTION (LATEST) */}
+      <div className='flex flex-col gap-10 px-8 mt-8'>
+        <Latest />
       </div>
-      </section>
-      
 
-     </div>
+      {/* CATEGORY SECTIONS */}
+      <div className='flex flex-col gap-8 mt-12 ml-6'>
+        <Animelist heading="Spring Anime" anime={spring} />
+        <Animelist heading="Airing Anime" anime={airing} />
+        <Animelist heading="Trending Anime" anime={trending} />
+        <Animelist heading="Upcoming Anime" anime={upcoming} />
+        <Animelist heading="SFW Anime" anime={sfw} />
+      </div>
+
+    </div>
   );
 }

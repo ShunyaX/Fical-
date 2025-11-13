@@ -1,6 +1,6 @@
 import React from 'react';
-import Movielist from './movielist';
-import { useRouter } from 'next/navigation';
+import Movielist from '../components/movielist';
+
 
 
 const trendinganime = async () =>{

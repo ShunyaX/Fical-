@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, KeyboardEvent } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 
 export default function Search() {
   const router = useRouter();
@@ -48,9 +49,9 @@ export default function Search() {
 
       <div className="flex gap-2 mt-2 justify-center">
         {['All', 'Movies', 'Manga'].map((tag) => (
-          <span key={tag} className="bg-slate-600 rounded-2xl p-3 shadow-2xl text-white text-nunito">
+          <button key={tag} className="bg-slate-600 rounded-2xl p-3 shadow-2xl text-white text-nunito active:outline-red-900 hover:bg-slate-700 transition-all duration-300">
             {tag}
-          </span>
+          </button>
         ))}
       </div>
 

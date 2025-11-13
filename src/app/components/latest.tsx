@@ -1,15 +1,21 @@
-export default function Latest() {
-  return (
-    <section className=" h-96">
-      <span className="md:px-3 md:p-1 p-2 text-white md:text-xl text-sm font-nunito rounded-l-2xl font-light w-1 bg-green-800">
+import Image from "next/image";
+import React from "react";
+import Slider from "./Slider";
 
-        <p>Latest</p>
-        </span>
-      
-        <h2 className="md:text-7xl text-3xl font-pop underline decoration-red-900 decoration-5 text-white">Blue Lock</h2>
-        <p className="text-white text-lg font-karla mt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at quam nec leo facilisis tincidunt.</p>
-      
+
+async function fetchLatestAnime() {
+  const res = await fetch("https://api.jikan.moe/v4/anime?order_by=popularity");
+  if (!res.ok) return [];
+  const data = await res.json();
+   return data.data.slice(0,10);
+
+}
+
+export default async function Latest() {
+    const latestAnime = await fetchLatestAnime();
     
-      </section>
+    
+  return (
+    <Slider anime={latestAnime} />
   );
 }

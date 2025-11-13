@@ -5,14 +5,13 @@
     import React from 'react'
 
   interface Props {
-    params: { id: string };
+    params: { category: string };
   }
 
 
-  export default async function Anime({params: { id }}: Props) {
-    
+  export default async function Anime({params: { category }}: Props) {
 
-    const res = await fetch(`https://api.jikan.moe/v4/anime/${id}`);
+    const res = await fetch(`https://api.jikan.moe/v4/anime/${category}`);
     const data = await res.json();
     const anime = data.data;
     return (
