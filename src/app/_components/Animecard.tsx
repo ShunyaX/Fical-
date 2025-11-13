@@ -23,7 +23,7 @@ interface AnimeCardProps {
 }
 
 
-export default function Animecard({anime,heading,more}:{anime: AnimeCardProps, heading?: string, more?: () => void}) {
+export default function Animecard({anime,heading}:{anime: AnimeCardProps, heading?: string,}) {
   const router = useRouter();
 
   const handlePlayClick = (anime: AnimeCardProps) => {
@@ -35,7 +35,7 @@ export default function Animecard({anime,heading,more}:{anime: AnimeCardProps, h
     <div className=''>
     <div className='flex items-center justify-between font-pop font-black  '>
     {heading && <p className=''>{heading}</p>}
-    {more && <button onClick={more}>More</button>}
+    
     </div>
 
     <Link href={`/anime/${anime.mal_id}`} className={`w-40 flex flex-col group relative font-pop overflow-y-auto snap-proximity scroll-smooth `}> 
