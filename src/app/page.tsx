@@ -32,12 +32,11 @@ async function getAllAnime() {
   };
 }
 
-// ✔ STEP 2: HomePage
 export default async function Home() {
 
   connect();
 
-  // Get all categories here
+
   const { spring, airing, trending, upcoming, sfw } = await getAllAnime();
 
   return (
