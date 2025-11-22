@@ -36,7 +36,6 @@ export default async function HomePage() {
       <Animelist heading="Trending Anime" anime={trending} />
       <Animelist heading="Upcoming Anime" anime={upcoming} />
       <Animelist heading="SFW Anime" anime={sfw} />
-      <Slider anime={spring} />
     </div>
   );
 }

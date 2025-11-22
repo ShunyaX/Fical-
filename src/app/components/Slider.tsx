@@ -1,6 +1,8 @@
 'use client';
-import { useRouter } from 'next/navigation';    
 
+import { useRouter } from 'next/navigation';    
+import Image from 'next/image';
+import { useState,useEffect } from 'react';
 
 import {Swiper,SwiperSlide } from 'swiper/react';
 import {Autoplay,Navigation, Pagination } from 'swiper/modules';
@@ -9,6 +11,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+
 
 type Anime = {
   mal_id: number;
@@ -24,13 +27,26 @@ type Anime = {
 };
 
 
-export default function Slider({anime}:{anime: Anime[]}) {    
-  const router = useRouter();
+export default function Slider() { 
+  const [anime, setAnime] = useState<Anime[]>([]);
+  
+   const router = useRouter();
+   useEffect(() => {
+    async function fetchTrending() {
+      const res = await fetch("https://api.jikan.moe/v4/top/anime?sfw");
+      const data = await res.json();
+      setAnime(data?.data?.slice(0, 5) || []);
+    }
+    fetchTrending();
+  }, []);
+
+  if (!anime || anime.length === 0) return null;
+
     return (
       
         <section className="">
       <Swiper
-        modules={[Navigation, Pagination]}
+        modules={[Navigation, Pagination,]}
         spaceBetween={20}
         slidesPerView={1}
         grabCursor={true}
@@ -53,27 +69,28 @@ export default function Slider({anime}:{anime: Anime[]}) {
           },
         }}
       >
+        
         {anime.map((anime: Anime, idx: number) => (
+          
           <SwiperSlide key={idx} onClick={() => router.push(`/anime/${anime.mal_id}`)}>
             <section className="overflow-hidden md:p-6 relative rounded-3xl h-[470px] md:h-[400px] md:w-[860px] flex gap-8 justify-between max-w-6xl mx-auto cursor-pointer ">
             <div className='absolute inset-0 w-full h-full -z-10'>
-              <img src={anime?.images?.jpg?.large_image_url} alt={anime?.title} className="w-full h-full object-cover blur-sm"/>
+              <Image fill src={anime?.images?.jpg?.large_image_url} alt={anime?.title} className="w-full h-full object-cover blur-sm -z-10"/>
               <div className="absolute inset-0 bg-gradient-to-l from-black/40 via-black/30 to-transparent"></div>
               <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/10 to-transparent"></div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
             </div>
             
 
-            <div className='swiper'><Swiper/></div>
+            
+      <div className= "md:w-[60%] p-8 absolute w-[90%] bottom-8 z-10 left-6 font-medium text-white ">
 
-      <div className= "md:w-[60%] p-8 absolute w-[80%] bottom-8 z-10 left-6 font-medium text-white ">
-
-        <h2 className="mb-3 md:text-5xl text-4xl font-pop font-extralight text-white ">{anime?.title}</h2>
+        <h2 className="mb-3 text-4xl font-pop font-medium text-white ">{anime?.title}</h2>
           
 
         <span className='flex gap-1 mt-2'>
         <p className='bg-slate-900 rounded-full text-xs font-pop font-light text-center p-2'>⭐{anime?.score}</p>
-        <p className='bg-slate-900 rounded-full text-xs font-pop font-light text-center p-2'>{anime.genres[0].name ?? "unknown"}</p>
+        <p className='bg-slate-900 rounded-full text-xs font-pop font-light text-center p-2'>{anime.genres?.[0]?.name ?? "unknown"}</p>
         </span>
         <div className='line-clamp-2 md:text-wrap'>
         <p className="text-white text-xs font-light font-nunito mt-2 ">{anime?.synopsis}</p>
@@ -83,8 +100,9 @@ export default function Slider({anime}:{anime: Anime[]}) {
         <button className='rounded-xl bg-zinc-800 text-base font-pop p-2 mt-4 hover:bg-zinc-900'><img src="/add.png" alt="Add" className="w-5 h-6 object-contain" /></button>
         </div>
         </div>
-        <div className="md:relative md:w-[28%] absolute w-full h-full rounded-3xl">
-          <img src={anime?.images?.jpg?.large_image_url} alt={anime?.title} className=" w-full h-full object-contain object-top md:object-right hover:scale-105 transition-transform duration-300" />
+        
+        <div className="absolute w-full h-full md:h-[90%] md:w-[92%] rounded-3xl">
+          <Image fill src={anime?.images?.jpg?.large_image_url} alt={anime?.title} className="w-full h-full rounded-xl  object-contain object-top md:object-right hover:scale-105 transition-transform duration-300  origin-top" />
               <div className="md:hidden absolute inset-0 bg-gradient-to-l from-black/90 via-black/30 to-transparent"></div>
               <div className="md:hidden absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent"></div>
               <div className="md:hidden absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent"></div>

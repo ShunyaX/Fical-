@@ -1,5 +1,5 @@
 
-    import Animeid from "@/app/_components/Animeid";
+    import Animeid from "@/app/components/Animeid";
     import React from 'react'
 
   interface Props {

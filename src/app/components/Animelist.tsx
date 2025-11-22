@@ -2,6 +2,7 @@
 import React from 'react'
 import Animecard from './Animecard';
 import Pulse from './Pulse';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 interface AnimeCardProps {
@@ -29,13 +30,7 @@ export default function Animelist({anime, heading}:{anime: AnimeCardProps[], hea
   return (
          <div>
             <div className='flex items-center justify-between pr-5'>
-        {heading && <p className='text-lg mb-3 font-pop text-white'>{heading}:</p>}
-        <button
-            onClick={() => router.push(`/More/${heading}`)}
-            className="text-red-500 hover:underline"
-        >
-            More...
-        </button>
+        {heading && <Link href={`/movielist/${heading.split(" ")[0].toLowerCase()}`}  className='text-lg mb-3 font-pop text-white'>{heading}{" >>"}</Link>}
         </div>
         <div className='flex gap-4 overflow-scroll scroll-smooth scrollbar-hide'>
 

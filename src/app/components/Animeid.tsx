@@ -8,11 +8,13 @@ export default function Animeid({anime}:{anime:any}) {
 
   return (
     <div className="relative overflow-hidden px-10 py-1 flex flex-col items-center h-[510px]">
-        <div className="h-[500px] overflow-hidden md:blur-sm absolute inset-0 -z-10" style={{
+        <div className="h-[600px] overflow-hidden md:blur-sm absolute inset-0 -z-10" style={{
           backgroundImage: `url(${anime.images.jpg.large_image_url})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
+          transform: 'scale(1.2)',
+          transformOrigin: "center center",
         }} >
         
         </div>
@@ -22,7 +24,7 @@ export default function Animeid({anime}:{anime:any}) {
         <div className=" absolute inset-0 -z-10 bg-gradient-to-b from-black/10 to-transparent pb-10 hidden sm:hidden md:block"></div>    
           
           <div className='hidden md:flex justify-end items-center w-full -z-10 md:mt-5'>
-        <Image src={anime.images.jpg.large_image_url} alt={anime.name} className="md:drop-shadow-2xl rounded-xl max-w-[300px]" />
+        <img  alt={anime.title} src={anime.images.jpg.large_image_url} className="md:drop-shadow-2xl rounded-xl max-w-[100px]" />
           </div>
           
           
@@ -45,12 +47,12 @@ export default function Animeid({anime}:{anime:any}) {
         <div className=" text-xs flex gap-4 mt-2  md:flex items-start justify-start">
           <div>
             <div className=" absolute inset-0 -z-10 bg-gradient-to-b from-black/10 to-black pb-10 md:hidden"></div>  
-            <button className="bg-red-600 text-white p-3 w-[250px] rounded-xl mt-4 flex items-center justify-center font-pop gap-5"><Image alt='play.png' src="/play.png" className=" w-6 h-6"/>Start watching E1</button>
+            <button className="bg-red-600 text-white p-3 w-[250px] rounded-xl mt-4 flex items-center justify-center font-pop gap-5"><Image width={20} height={20} alt='play.png' src="/play.png" className=" w-6 h-6"/>Start watching E1</button>
           </div>
-          <button className="bg-transparent border-red-600 border-2 text-white p-3 w-12 rounded-xl mt-4 flex items-center justify-center font-pop gap-2"><Image alt='add.png' src="/add.png" className="w-5 h-5"/></button>
+          <button className="bg-transparent border-red-600 border-2 text-white p-3 w-12 rounded-xl mt-4 flex items-center justify-center font-pop gap-2"><Image width={20} height={20} alt='add.png' src="/add.png" className="w-5 h-5"/></button>
           
         </div>
-        <button className="bg-blue-900 text-white p-3 md:w-[315px] w-[250px] rounded-xl mt-4 flex items-center justify-center font-pop gap-2" onClick={()=>{isopen(true)}}><Image alt='info.png' src="/info.png" className=" w-6 h-6"/>More Details</button>
+        <button className="bg-blue-900 text-white p-3 md:w-[315px] w-[250px] rounded-xl mt-4 flex items-center justify-center font-pop gap-2" onClick={()=>{isopen(true)}}><Image width={20} height={20} alt='info.png' src="/info.png" className=" w-6 h-6"/>More Details</button>
         </div>
 
          {open && (

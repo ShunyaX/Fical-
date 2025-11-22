@@ -33,7 +33,7 @@ export default function Nav() {
       <div className="flex items-center space-x-4">
         <button className=" bg-slate-200 text-red-900 font-pop p-2 rounded-md text-sm hover:bg-gray-200 " onClick={() => {router.push("/Login")}}>Login</button>
 
-        <button className=" text-white px-3 py-2 rounded-md h-8 md:h-10 " onClick={handlesearch}><Image alt="search" src="/search.png" className="w-full h-full"/></button>
+        <button className=" text-white px-3 py-2 rounded-md h-8 md:h-10 " onClick={handlesearch}><Image alt="search" src="/search.png" width={200} height={200} className="w-full h-full"/></button>
         
         <button className="md:hidden text-white" onClick={() => setIsOpen(!isOpen)}>
             ☰
