@@ -3,6 +3,7 @@
 import React, { useState, useEffect, KeyboardEvent } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
+import Animecard, { AnimeCardProps } from '../components/Animecard';
 
 export default function Search() {
   const router = useRouter();
@@ -11,6 +12,7 @@ export default function Search() {
 
   const [input, setInput] = useState('');
   const [results, setResults] = useState<any[]>([]);
+  const [acttag, setActTag] = useState<string>('All');
 
   const handleSearch = () => {
     if (input.trim()) {
@@ -26,13 +28,23 @@ export default function Search() {
 
   useEffect(() => {
     const fetchAnime = async () => {
-      const res = await fetch(`https://api.jikan.moe/v4/anime?q=${encodeURIComponent(query)}`);
+      let url = `https://api.jikan.moe/v4/anime?q=${encodeURIComponent(query)}`;
+
+      if( acttag === 'Anime' ){
+        url += "&type=movie";
+      }
+
+      if( acttag === 'Manga' ){
+        url = `https://api.jikan.moe/v4/manga?q=${encodeURIComponent(query)}`;
+      }
+
+      const res = await fetch(url);
       const data = await res.json();
       setResults(data.data);
     };
 
     if (query.trim()) fetchAnime();
-  }, [query]);
+  }, [query, acttag ]);
 
   return (
     <div className="min-h-screen py-5">
@@ -48,47 +60,20 @@ export default function Search() {
       </div>
 
       <div className="flex gap-2 mt-2 justify-center">
-        {['All', 'Movies', 'Manga'].map((tag) => (
-          <button key={tag} className="bg-slate-600 rounded-2xl p-3 shadow-2xl text-white text-nunito active:outline-red-900 hover:bg-slate-700 transition-all duration-300">
+        {['All', 'Anime', 'Manga'].map((tag) => (
+          <button key={tag} onClick={() => setActTag(tag)} className={` rounded-2xl p-3 shadow-2xl text-white text-nunito transition-all duration-300 ${tag === acttag ? "bg-red-800" : "bg-slate-600"}`}>
             {tag}
           </button>
         ))}
       </div>
 
-      <h1 className="font-pop font-semibold mt-32 text-white text-center">
-        Search Results for "{query}"
+      <h1 className="font-pop font-semibold mt-32 text-white text-center">{query && `${acttag} Results for "${query}"`}
+        
       </h1>
 
-      <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4 place-items-center px-4">
+      <div className="mt-10 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5  gap-4 place-items-center px-4">
         {results.map((anime,index) => (
-          <button
-            key={`${anime.mal_id}_${index}`}
-            onClick={() => router.push(`/anime/${anime.mal_id}`)}
-            className="relative w-44 h-56 md:w-60 md:h-80 rounded-xl overflow-hidden shadow-2xl"
-          >
-            <div
-              className="absolute inset-0 bg-cover bg-center blur-sm scale-110 z-0"
-              style={{ backgroundImage: `url(${anime.images.jpg.large_image_url})` }}
-            />
-
-            <div className="relative z-10 flex justify-center items-center md:h-48 h-38 bg-black/10">
-              <Image
-                src={anime.images.jpg.large_image_url}
-                alt={anime.title}
-                className="object-contain h-full"
-              />
-            </div>
-
-            <div className="relative z-10 px-3 py-5 bg-zinc-800/90 backdrop-blur-sm font-nunito text-white h-32 flex flex-col justify-between">
-              <h2 className="font-semibold text-sm truncate">{anime.title}</h2>
-              <p className="text-gray-300 text-xs line-clamp-2">
-                {anime.synopsis?.slice(0, 100)}...
-              </p>
-              <span className="text-yellow-400 text-sm font-semibold">
-                ⭐ {anime.score ?? "-"}
-              </span>
-            </div>
-          </button>
+           <Animecard key={anime.mal_id} anime={anime as AnimeCardProps} />
         ))}
       </div>
     </div>

@@ -11,6 +11,10 @@ export const revalidate = 0;
 export const metadata = {
   title: "Fical - Watch Anime",
   description: "Fical",
+    icons: {
+    icon: "/favicon.ico",
+  },
+
 };
 
 

@@ -21,10 +21,7 @@ export default function Nav() {
       </div>
       <ul className="space-x-4 hidden md:flex font-pop">
         <li>
-          <Link href="/All" className="text-white hover:text-gray-300">All</Link>
-        </li>
-        <li>
-          <Link href="/movies" className="text-white hover:text-gray-300">Movies</Link>
+          <Link href="/movies" className="text-white hover:text-gray-300">Anime</Link>
         </li>
         <li>
           <Link href="/Manga" className="text-white hover:text-gray-300">Manga</Link>

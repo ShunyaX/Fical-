@@ -46,7 +46,7 @@ export default function Slider() {
       
         <section className="">
       <Swiper
-        modules={[Navigation, Pagination,]}
+        modules={[Navigation, Pagination,Autoplay]}
         spaceBetween={20}
         slidesPerView={1}
         grabCursor={true}
@@ -54,7 +54,8 @@ export default function Slider() {
         pagination={{ clickable: true }}
         autoplay={{
           delay: 3000,
-          disableOnInteraction: false,
+          disableOnInteraction: true,
+          
         }}
 
         breakpoints={{
