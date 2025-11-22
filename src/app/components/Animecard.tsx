@@ -10,7 +10,8 @@ export interface AnimeCardProps {
   title: string;
   images: {
     jpg: {
-      large_image_url: string;
+      image_url?: string;
+      large_image_url?: string;
     };
   };
   genres: { name: string }[];
@@ -50,10 +51,11 @@ export default function Animecard({
       >
         <span className="w-40 h-60 rounded-lg overflow-hidden">
           <Image
-            width={200}
-            height={300}
-            src={anime.images.jpg.large_image_url}
+            width={170}
+            height={240}
+            src={anime.images.jpg.image_url || "/placeholder.png"}
             alt={anime.title}
+            sizes="(max-width: 768px) 170px, 170px"
             priority
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
@@ -65,7 +67,7 @@ export default function Animecard({
             bg-zinc-900 bg-opacity-95 rounded-b-xl p-1 text-white font-pop
           "
         >
-          <p className="text-white text-sm mt-2 font-pop font-bold">
+          <p className="text-white text-sm line-clamp-3 mt-2  font-pop font-bold">
             {anime.title}
           </p>
 
@@ -83,7 +85,7 @@ export default function Animecard({
                 {anime.episodes || "N/A"} Episodes
               </p>
 
-              <p className="line-clamp-5 text-[12px] mt-1">
+              <p className="line-clamp-3 text-[12px] mt-1">
                 {anime.synopsis}
               </p>
             </span>

@@ -18,6 +18,7 @@ type Anime = {
   title: string;
   images: {
     jpg: {
+      image_url: string;
       large_image_url: string;
     };
   };
@@ -74,9 +75,9 @@ export default function Slider() {
         {anime.map((anime: Anime, idx: number) => (
           
           <SwiperSlide key={idx} onClick={() => router.push(`/anime/${anime.mal_id}`)}>
-            <section className="overflow-hidden md:p-6 relative rounded-3xl h-[470px] md:h-[400px] md:w-[860px] flex gap-8 justify-between max-w-6xl mx-auto cursor-pointer ">
-            <div className='absolute inset-0 w-full h-full -z-10'>
-              <Image fill src={anime?.images?.jpg?.large_image_url} alt={anime?.title} className="w-full h-full object-cover blur-sm -z-10"/>
+            <section className="overflow-hidden md:mx-auto relative rounded-3xl h-[470px] md:h-[400px] md:w-[860px] flex gap-8 justify-between max-w-6xl mx-auto cursor-pointer ">
+            <div className='absolute inset-0 -z-10'>
+              <Image fill src={anime?.images?.jpg?.image_url} alt={anime?.title} className="w-full h-full object-cover blur-sm -z-10"/>
               <div className="absolute inset-0 bg-gradient-to-l from-black/40 via-black/30 to-transparent"></div>
               <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/10 to-transparent"></div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
@@ -84,7 +85,7 @@ export default function Slider() {
             
 
             
-      <div className= "md:w-[60%] p-8 absolute w-[90%] bottom-8 z-10 left-6 font-medium text-white ">
+      <div className= "md:w-[60%] absolute w-full px-7 py-2 bottom-8 z-10 font-medium text-white ">
 
         <h2 className="mb-3 text-4xl font-pop font-medium text-white ">{anime?.title}</h2>
           
@@ -97,13 +98,13 @@ export default function Slider() {
         <p className="text-white text-xs font-light font-nunito mt-2 ">{anime?.synopsis}</p>
         </div>
         <div className='flex gap-2 items-center'>
-        <button className="text-white border-2 border-red-500 text-sm font-pop rounded-full bg-red-600 p-3 mt-4 hover:bg-red-700 " > Watch now </button>
-        <button className='rounded-xl bg-zinc-800 text-base font-pop p-2 mt-4 hover:bg-zinc-900'><img src="/add.png" alt="Add" className="w-5 h-6 object-contain" /></button>
+        <button className="text-white border-2 border-red-500 text-sm font-pop rounded-full bg-red-600 px-4 py-2 mt-4 hover:bg-red-700 " > Watch now </button>
+        <button className='rounded-xl bg-zinc-800 text-base font-pop px-3 py-2 mt-4 hover:bg-zinc-900'><img src="/add.png" alt="Add" className="w-5 h-6 object-contain" /></button>
         </div>
         </div>
         
-        <div className="absolute w-full h-full md:h-[90%] md:w-[92%] rounded-3xl">
-          <Image fill src={anime?.images?.jpg?.large_image_url} alt={anime?.title} className="w-full h-full rounded-xl  object-contain object-top md:object-right hover:scale-105 transition-transform duration-300  origin-top" />
+        <div className="absolute inset-0 rounded-3xl md:inset-[5%]">
+          <Image fill src={anime?.images?.jpg?.image_url} alt={anime?.title} className="object-contain object-top md:object-right " />
               <div className="md:hidden absolute inset-0 bg-gradient-to-l from-black/90 via-black/30 to-transparent"></div>
               <div className="md:hidden absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent"></div>
               <div className="md:hidden absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent"></div>

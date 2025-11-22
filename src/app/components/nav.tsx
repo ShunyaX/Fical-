@@ -13,7 +13,7 @@ export default function Nav() {
   };
 
   return (
-    <div className="sticky top-0 z-50 p-1 px-6 max-w-full ">
+    <div className="sticky top-0 z-50 p-1 mx-2 md:mx-10 max-w-full ">
     <nav className="bg-[#8A0000]/80 backdrop-blur-3xl border-b border-red-200/10
  rounded-2xl drop-shadow-xl p-3 flex justify-between items-center shadow-md">
       <div className="text-white md:text-2xl text-xl font-pop">
@@ -21,7 +21,7 @@ export default function Nav() {
       </div>
       <ul className="space-x-4 hidden md:flex font-pop">
         <li>
-          <Link href="/movies" className="text-white hover:text-gray-300">Anime</Link>
+          <Link href="/Anime" className="text-white hover:text-gray-300">Anime</Link>
         </li>
         <li>
           <Link href="/Manga" className="text-white hover:text-gray-300">Manga</Link>

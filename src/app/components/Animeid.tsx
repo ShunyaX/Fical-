@@ -7,13 +7,12 @@ export default function Animeid({anime}:{anime:any}) {
   const [open, isopen] = useState(false);
 
   return (
-    <div className="relative overflow-hidden px-10 py-1 flex flex-col items-center h-[510px]">
-        <div className="h-[600px] overflow-hidden md:blur-sm absolute inset-0 -z-10" style={{
-          backgroundImage: `url(${anime.images.jpg.large_image_url})`,
+    <div className="relative overflow-hidden px-10 flex flex-col items-center h-full md:h-[530px] ">
+        <div className="h-[540px] overflow-hidden md:blur-sm absolute inset-0 -z-10" style={{
+          backgroundImage: `url(${anime.images.jpg.image_url})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          transform: 'scale(1.2)',
           transformOrigin: "center center",
         }} >
         
@@ -24,7 +23,7 @@ export default function Animeid({anime}:{anime:any}) {
         <div className=" absolute inset-0 -z-10 bg-gradient-to-b from-black/10 to-transparent pb-10 hidden sm:hidden md:block"></div>    
           
           <div className='hidden md:flex justify-end items-center w-full -z-10 md:mt-5'>
-        <img  alt={anime.title} src={anime.images.jpg.large_image_url} className="md:drop-shadow-2xl rounded-xl max-w-[100px]" />
+        <img  alt={anime.title} src={anime?.images?.jpg.large_image_url} className="md:drop-shadow-3xl shadow-cyan-500/50 border-4 rounded-3xl max-w-80 mt-4 mr-5 " />
           </div>
           
           
@@ -52,12 +51,13 @@ export default function Animeid({anime}:{anime:any}) {
           <button className="bg-transparent border-red-600 border-2 text-white p-3 w-12 rounded-xl mt-4 flex items-center justify-center font-pop gap-2"><Image width={20} height={20} alt='add.png' src="/add.png" className="w-5 h-5"/></button>
           
         </div>
-        <button className="bg-blue-900 text-white p-3 md:w-[315px] w-[250px] rounded-xl mt-4 flex items-center justify-center font-pop gap-2" onClick={()=>{isopen(true)}}><Image width={20} height={20} alt='info.png' src="/info.png" className=" w-6 h-6"/>More Details</button>
+        <button className="bg-blue-900 text-white p-3 w-full md:w-[315px] rounded-xl mt-4 flex items-center justify-center font-pop gap-2" onClick={()=>{isopen(true)}}><Image width={20} height={20} alt='info.png' src="/info.png" className=" w-6 h-6"/>More Details</button>
         </div>
 
          {open && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-            <div className="bg-zinc-900 p-4 rounded-lg text-white">
+            <div className="bg-zinc-900 p-4 rounded-lg  w-[95%] max-w-[800px] scrollbar-hide
+                    max-h-[70vh] overflow-y-auto text-white">
               <h2 className="text-lg font-bold mb-2">{anime.title}</h2>
               <p>{anime.synopsis}</p>
               <button className="mt-4 bg-blue-500 text-white p-2 rounded" onClick={() => isopen(false)}>Close</button>
