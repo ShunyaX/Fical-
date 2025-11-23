@@ -47,23 +47,22 @@ export default function Animecard({
 
       <Link
         href={`/anime/${anime.mal_id}`}
-        className="w-40 flex flex-col group relative font-pop overflow-y-auto snap-proximity scroll-smooth"
+        prefetch={false}
+        className="w-40 flex flex-col group relative font-pop snap-proximity scroll-smooth"
       >
-        <span className="w-40 h-60 rounded-lg overflow-hidden">
+        <span className="relative w-40 h-60 rounded-lg overflow-hidden">
           <Image
-            width={170}
-            height={240}
+            fill
             src={anime.images.jpg.image_url || "/placeholder.png"}
             alt={anime.title}
             sizes="(max-width: 768px) 170px, 170px"
-            priority
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
         </span>
 
         <div
           className="
-            flex flex-col absolute inset-0 items-start opacity-0 group-hover:opacity-100 transition-opacity duration-300
+            flex flex-col w-full absolute inset-0 items-start opacity-0 group-hover:opacity-100 transition-opacity duration-300
             bg-zinc-900 bg-opacity-95 rounded-b-xl p-1 text-white font-pop
           "
         >

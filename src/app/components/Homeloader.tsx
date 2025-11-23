@@ -1,6 +1,7 @@
 import Animelist from "./Animelist";
 import Slider from "./Slider";
 
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 async function endpoint() {
   const urls = {
@@ -11,20 +12,37 @@ async function endpoint() {
     sfw: "https://api.jikan.moe/v4/anime?sfw",
   };
 
-
-  const responses = await Promise.all(
-    Object.values(urls).map((url) => fetch(url).then((r) => r.json()))
-  );
-
-  return {
-    spring: responses[0].data,
-    airing: responses[1].data,
-    trending: responses[2].data,
-    upcoming: responses[3].data,
-    sfw: responses[4].data,
+  const results: Record<string, any> = {
+    spring: [],
+    airing: [],
+    trending: [],
+    upcoming: [],
+    sfw: [],
   };
-}
 
+  try {
+    for (const [key, url] of Object.entries(urls)) {
+      
+
+      const res = await fetch(url, { next: { revalidate: 3600 } });
+
+      if (res.ok) {
+        const data = await res.json();
+        results[key] = data.data || [];
+      } else {
+        console.error(`Failed ${key}: ${res.status}`);
+      }
+
+      await delay(400);
+    }
+
+    return results;
+
+  } catch (error) {
+    console.error("Critical API Error:", error);
+    return results;
+  }
+}
 
 export default async function HomePage() {
   const { spring, airing, trending, upcoming, sfw } = await endpoint();

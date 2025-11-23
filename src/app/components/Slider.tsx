@@ -1,4 +1,6 @@
 'use client';
+export const revalidate = 3600;
+
 
 import { useRouter } from 'next/navigation';    
 import Image from 'next/image';
@@ -47,6 +49,7 @@ export default function Slider() {
       
         <section className="">
       <Swiper
+   
         modules={[Navigation, Pagination,Autoplay]}
         spaceBetween={20}
         slidesPerView={1}
@@ -77,10 +80,11 @@ export default function Slider() {
           <SwiperSlide key={idx} onClick={() => router.push(`/anime/${anime.mal_id}`)}>
             <section className="overflow-hidden md:mx-auto relative rounded-3xl h-[470px] md:h-[400px] md:w-[860px] flex gap-8 justify-between max-w-6xl mx-auto cursor-pointer ">
             <div className='absolute inset-0 -z-10'>
-              <Image fill src={anime?.images?.jpg?.image_url} alt={anime?.title} className="w-full h-full object-cover blur-sm -z-10"/>
-              <div className="absolute inset-0 bg-gradient-to-l from-black/40 via-black/30 to-transparent"></div>
-              <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/10 to-transparent"></div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
+              <Image fill src={anime?.images?.jpg?.image_url}  priority alt={anime?.title} className="w-full h-full object-cover md:opacity-20 -z-10"/>
+              <div className=" hidden md:flex absolute inset-0 bg-gradient-to-r from-black/90 via-black/10 to-transparent"></div>
+              <div className="hidden md:flex absolute inset-0 bg-gradient-to-l from-black/70 via-transparent to-transparent"></div>
+              <div className="absolute md:hidden inset-0 bg-gradient-to-t from-black/90 via-black/80 to-transparent"></div>
+
             </div>
             
 
@@ -103,13 +107,11 @@ export default function Slider() {
         </div>
         </div>
         
-        <div className="absolute inset-0 rounded-3xl md:inset-[5%]">
-          <Image fill src={anime?.images?.jpg?.image_url} alt={anime?.title} className="object-contain object-top md:object-right " />
-              <div className="md:hidden absolute inset-0 bg-gradient-to-l from-black/90 via-black/30 to-transparent"></div>
-              <div className="md:hidden absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent"></div>
-              <div className="md:hidden absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent"></div>
-              <div className="md:hidden absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
-
+        <div className="absolute right-10 top-1/2 -translate-y-1/2 
+                 md:w-[260px] md:h-[360px]
+                rounded-3xl overflow-hidden 
+                border border-white/20 shadow-xl ">
+          <Image fill src={anime?.images?.jpg?.image_url} alt={anime?.title} loading='lazy' className="object-contain object-top md:object-right " />
         </div>
  
 

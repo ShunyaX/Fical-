@@ -41,7 +41,7 @@ export default function Animelist({anime, heading}:{anime: AnimeCardProps[], hea
                     ))
                 ) :!time? (
                     
-                    [...Array(6)].map((_, i) => <Pulse key={i} />)
+                    [...Array(8)].map((_, i) => <Pulse key={i} />)
                 ) : (
                     <p className='text-white text-center'>Failed to load. please refresh the page </p>
                 )}
