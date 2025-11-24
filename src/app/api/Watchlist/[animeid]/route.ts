@@ -4,6 +4,12 @@ import { handler } from "@/app/api/auth/[...nextauth]/route";
 import connect from "@/app/lib/config";
 import Watchlist from "@/app/lib/models/watchlist";
 
+interface Params {
+  params: {
+    animeid: string;
+  };
+}
+
 export async function DELETE(
   req: Request,
   { params }: { params: { animeId: string } }
