@@ -1,9 +1,8 @@
   import type { Metadata } from "next";
   import { Nunito,Karla,Poppins } from "next/font/google";
   import Nav from "./components/nav";
-      
-
   import "./globals.css";
+import SessionWrapper from "./SessionWrapper";
 
   const nunito = Nunito({
     variable: "--font-Nunito",
@@ -36,8 +35,11 @@
     return (
       <html lang="en" >
         <body className={`${nunito.variable} ${karl.variable} ${pop.variable} bg-[#1D1616]`} >
+          <SessionWrapper>
           <Nav/>
            {children}
+           </SessionWrapper>
+
           
         </body>
       </html>

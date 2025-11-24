@@ -30,11 +30,31 @@ export default function Animecard({
   heading?: string;
 }) {
   const router = useRouter();
+  const [saved, setSaved] = useState(false);
 
   const handlePlayClick = (anime: AnimeCardProps) => {
     router.push(`/anime/${anime.mal_id}`);
   };
 
+
+  const handlesave = async () =>{
+    if(!saved){
+      await fetch('api/Watchlist',{
+        method:'POST',
+        body:JSON.stringify({
+          animeId: anime.mal_id,
+          title: anime.title,
+          image: anime.images.jpg.image_url
+        }),
+      });
+      setSaved(true);
+    }else{
+      await fetch('api/Watchlist/{anime.mal_id}',{
+        method:'DELETE',
+      });
+      setSaved(false);
+    }
+  }
   return (
     <div className="">
       <div className="flex items-center justify-between font-pop font-black">
@@ -109,12 +129,16 @@ export default function Animecard({
                 <Image
                   width={200}
                   height={200}
-                  src="/add.png"
+                  src={saved ? "/saved.png" : "/add.png"}
                   alt="Add"
+                  onClick= {(e) => {
+                      e.preventDefault();
+                      handlesave();
+                    }}
                   className="
-                    w-6 h-6 transition duration-200 
-                    hover:brightness-110 hover:saturate-200 
-                    hover:invert hover:sepia hover:hue-rotate-20
+                    w-6 h-6 transition-all
+                    hover:brightness-90 
+                    hover:saturate-200
                   "
                 />
               </button>

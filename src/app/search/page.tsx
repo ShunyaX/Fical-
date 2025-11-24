@@ -26,6 +26,8 @@ export default function Search() {
     }
   };
 
+
+
   useEffect(() => {
     const fetchAnime = async () => {
       let url = `https://api.jikan.moe/v4/anime?q=${encodeURIComponent(query)}`;
@@ -44,7 +46,7 @@ export default function Search() {
     };
 
     if (query.trim()) fetchAnime();
-  }, [query, acttag ]);
+  }, [query, acttag,input]);
 
   return (
     <div className="min-h-screen py-5">
@@ -52,7 +54,7 @@ export default function Search() {
         <input
           type="text"
           value={input}
-          onChange={(e) => setInput(e.target.value)}
+          onChange={(e) => setInput(e.target.value) }
           onKeyDown={handleKeyPress}
           placeholder="Search..."
           className="bg-zinc-600 text-white p-4 rounded-xl w-full outline-none text-lg font-pop"

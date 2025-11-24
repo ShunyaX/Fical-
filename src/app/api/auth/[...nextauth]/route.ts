@@ -5,7 +5,7 @@ import connect from "@/app/lib/config";
 import { User } from '@/app/lib/models/userModel';
 import bcrypt from 'bcryptjs';
 
-const handler = NextAuth({
+export const handler = NextAuth({
     providers:[
     CredentialsProvider({
         name: "Credentials",
@@ -29,11 +29,28 @@ const handler = NextAuth({
     ],
     session:{
         strategy: "jwt",
+        maxAge: 60 * 60, // 1 day
+    },
+    jwt: {
+        maxAge: 60 * 60,
+    },
+
+    callbacks:{
+        async jwt({token, user}){
+            if (user) token.id = user.id;
+            return token;},
+
+        async session({session, token}){
+            if (token) session.user.id = token.id;
+            return session;
+        },
     },
     pages: {
         signIn: "/Login",
     },
     secret: process.env.NEXTAUTH_SECRET,
 });
+
+
 
 export { handler as GET, handler as POST };
