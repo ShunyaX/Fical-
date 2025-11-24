@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import connect from "@/app/lib/config";
 import WatchlistModel from "@/app/lib/models/watchlist";
 import { getServerSession } from "next-auth";
-import { handler } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export async function DELETE(
   req: Request,
@@ -10,7 +10,7 @@ export async function DELETE(
 ) {
   await connect();
 
-  const session: any = await getServerSession(handler);
+  const session: any = await getServerSession(authOptions);
   if (!session) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
