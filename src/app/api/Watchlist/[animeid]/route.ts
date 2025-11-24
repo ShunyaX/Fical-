@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
+import connect from "@/app/lib/config";
+import WatchlistModel from "@/app/lib/models/watchlist";
 import { getServerSession } from "next-auth";
 import { handler } from "@/app/api/auth/[...nextauth]/route";
-import connect from "@/app/lib/config";
-import Watchlist from "@/app/lib/models/watchlist";
 
 interface Params {
   params: {
@@ -10,22 +10,20 @@ interface Params {
   };
 }
 
-export async function DELETE(
-  req: Request,
-  { params }: { params: { animeId: string } }
-) {
+export async function DELETE(req: Request, { params }: Params) {
   await connect();
 
   const session:any = await getServerSession(handler);
-  const userEmail = session?.user?.email;
-
-  if (!session || !userEmail)
+  if (!session) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-  const animeId = Number(params.animeId);
+  const userEmail = session.user?.email;
 
-  await Watchlist.findOneAndDelete({ userEmail, animeId });
-  
+  await WatchlistModel.findOneAndDelete({
+    animeId: params.animeid,
+    userEmail,
+  });
 
   return NextResponse.json({ success: true });
 }
