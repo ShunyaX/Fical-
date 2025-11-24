@@ -6,7 +6,7 @@ import { handler } from "@/app/api/auth/[...nextauth]/route";
 
 export async function DELETE(
   req: Request,
-  context: { params: { animeid: string } }
+  context: any
 ) {
   await connect();
 
@@ -16,7 +16,15 @@ export async function DELETE(
   }
 
   const userEmail = session.user?.email;
-  const animeId = context.params.animeid;
+  const animeidParam = context?.params?.animeid;
+  if (!animeidParam) {
+    return NextResponse.json({ error: "Missing param" }, { status: 400 });
+  }
+
+  const animeId = Number(animeidParam); 
+  if (Number.isNaN(animeId)) {
+    return NextResponse.json({ error: "Invalid animeId" }, { status: 400 });
+  }
 
   await WatchlistModel.findOneAndDelete({
     animeId,
