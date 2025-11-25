@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import savedchk from "@/hooks/savedchk";
 
 export interface AnimeCardProps {
   mal_id: number;
@@ -31,30 +32,12 @@ export default function Animecard({
 }) {
   const router = useRouter();
   const [saved, setSaved] = useState(false);
+  const { saved:isaved, toggleWatchlist } = savedchk(anime);
 
   const handlePlayClick = (anime: AnimeCardProps) => {
     router.push(`/anime/${anime.mal_id}`);
   };
-
-
-  const handlesave = async () =>{
-    if(!saved){
-      await fetch('api/Watchlist',{
-        method:'POST',
-        body:JSON.stringify({
-          animeId: anime.mal_id,
-          title: anime.title,
-          image: anime.images.jpg.image_url
-        }),
-      });
-      setSaved(true);
-    }else{
-      await fetch('api/Watchlist/{anime.mal_id}',{
-        method:'DELETE',
-      });
-      setSaved(false);
-    }
-  }
+  
   return (
     <div className="">
       <div className="flex items-center justify-between font-pop font-black">
@@ -129,12 +112,9 @@ export default function Animecard({
                 <Image
                   width={200}
                   height={200}
-                  src={saved ? "/saved.png" : "/add.png"}
+                  src={isaved ? "/saved.png" : "/add.png"}
                   alt="Add"
-                  onClick= {(e) => {
-                      e.preventDefault();
-                      handlesave();
-                    }}
+                  onClick= {toggleWatchlist}
                   className="
                     w-6 h-6 transition-all
                     hover:brightness-90 

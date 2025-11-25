@@ -5,7 +5,7 @@ export const revalidate = 3600;
 import { useRouter } from 'next/navigation';    
 import Image from 'next/image';
 import { useState,useEffect } from 'react';
-
+import { useSession } from 'next-auth/react';
 import {Swiper,SwiperSlide } from 'swiper/react';
 import {Autoplay,Navigation, Pagination } from 'swiper/modules';
 
@@ -13,6 +13,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+
 
 
 type Anime = {
@@ -32,6 +33,7 @@ type Anime = {
 
 export default function Slider() { 
   const [anime, setAnime] = useState<Anime[]>([]);
+  const {data:session} = useSession();
   
    const router = useRouter();
    useEffect(() => {
@@ -103,7 +105,7 @@ export default function Slider() {
         </div>
         <div className='flex gap-2 items-center'>
         <button className="text-white border-2 border-red-500 text-sm font-pop rounded-full bg-red-600 px-4 py-2 mt-4 hover:bg-red-700 " > Watch now </button>
-        <button className='rounded-xl bg-zinc-800 text-base font-pop px-3 py-2 mt-4 hover:bg-zinc-900'><img src="/add.png" alt="Add" className="w-5 h-6 object-contain" /></button>
+        <button onClick={()=>{if(!session) router.push('Login')}} className='rounded-xl border-2 border-gray-600 bg-zinc-800 text-base font-pop px-3 py-2 mt-4 hover:bg-red-600'><img src="/add.png" alt="Add" className="w-5 h-6 object-contain" /></button>
         </div>
         </div>
         

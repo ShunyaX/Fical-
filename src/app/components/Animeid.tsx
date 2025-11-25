@@ -2,9 +2,12 @@
 import React from 'react';
 import Image from 'next/image';
 import { useState } from 'react';
+import session from 'next-auth/next';
+import savedchk from '@/hooks/savedchk';
 
 export default function Animeid({anime}:{anime:any}) {
   const [open, isopen] = useState(false);
+  const { saved, toggleWatchlist } = savedchk(anime);
 
   return (
     <div className="relative overflow-hidden px-10 flex flex-col items-center h-full md:h-[530px] ">
@@ -48,7 +51,7 @@ export default function Animeid({anime}:{anime:any}) {
             <div className=" absolute inset-0 -z-10 bg-gradient-to-b from-black/10 to-black pb-10 md:hidden"></div>  
             <button className="bg-red-600 text-white p-3 w-[250px] rounded-xl mt-4 flex items-center justify-center font-pop gap-5"><Image width={20} height={20} alt='play.png' src="/play.png" className=" w-6 h-6"/>Start watching E1</button>
           </div>
-          <button className="bg-transparent border-red-600 border-2 text-white p-3 w-12 rounded-xl mt-4 flex items-center justify-center font-pop gap-2"><Image width={20} height={20} alt='add.png' src="/add.png" className="w-5 h-5"/></button>
+          <button className="bg-transparent hover:bg-red-600 border-red-600 border-2 text-white p-3 w-12 rounded-xl mt-4 flex items-center justify-center font-pop gap-2"><Image width={20} height={20} onClick={toggleWatchlist} alt='add.png' src={saved ? "/saved.png" : "/add.png"} className="w-5 h-5"/></button>
           
         </div>
         <button className="bg-blue-900 text-white p-3 w-full md:w-[315px] rounded-xl mt-4 flex items-center justify-center font-pop gap-2" onClick={()=>{isopen(true)}}><Image width={20} height={20} alt='info.png' src="/info.png" className=" w-6 h-6"/>More Details</button>
