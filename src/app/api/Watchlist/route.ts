@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { handler } from "@/app/api/auth/[...nextauth]/route";
+
+import {authOptions} from "@/app/lib/authOptions";
 import connect from "@/app/lib/config";
 import Watchlist from "@/app/lib/models/watchlist";
 
 export async function GET() {
   await connect();
-  const session: any = await getServerSession(handler);
+  const session: any = await getServerSession(authOptions);
   const userEmail = session?.user?.email;
 
   if (!session || !userEmail)
@@ -18,7 +19,7 @@ export async function GET() {
 
 export async function POST(req: Request) {
   await connect();
-  const session: any = await getServerSession(handler);
+  const session: any = await getServerSession(authOptions);
   const userEmail = session?.user?.email;
 
   if (!session || !userEmail)

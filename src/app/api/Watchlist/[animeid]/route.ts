@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import connect from "@/app/lib/config";
 import WatchlistModel from "@/app/lib/models/watchlist";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/lib/authOptions";
 
 export async function DELETE(
   req: Request,
