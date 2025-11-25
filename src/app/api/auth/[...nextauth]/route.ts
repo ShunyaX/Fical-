@@ -1,11 +1,12 @@
 
 import NextAuth from "next-auth";
+import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import connect from "@/app/lib/config";
 import { User } from '@/app/lib/models/userModel';
 import bcrypt from 'bcryptjs';
 
-export const authOptions = NextAuth({
+export const authOptions : AuthOptions = {
     providers:[
     CredentialsProvider({
         name: "Credentials",
@@ -49,7 +50,7 @@ export const authOptions = NextAuth({
         signIn: "/Login",
     },
     secret: process.env.NEXTAUTH_SECRET,
-});
+};
 
 const auth = NextAuth(authOptions);
 
