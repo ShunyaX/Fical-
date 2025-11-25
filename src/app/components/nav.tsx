@@ -33,7 +33,7 @@ export default function Nav() {
         </li>
       </ul>
       <div className="flex items-center space-x-4 pr-2">
-        <button className=" bg-slate-200 text-red-900 font-pop p-2 rounded-md text-sm hover:bg-gray-200 " onClick={() => {router.push("/Login")}}>Login</button>
+       {!session && <button className=" bg-slate-200 text-red-900 font-pop p-2 rounded-md text-sm hover:bg-gray-200 " onClick={() => {router.push("/Login")}}>Login</button>}
 
         <button className=" text-white rounded-md h-8 md:h- " onClick={handlesearch}><Image alt="search" src="/search.svg" width={200} height={200} className="w-full h-full"/></button>
 
