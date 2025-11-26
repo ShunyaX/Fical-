@@ -3,11 +3,13 @@ import React from 'react'
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Image from 'next/image';
+import { set } from 'mongoose';
 
 export default function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [done, setDone] = useState(false);
+  const [error, setError] = useState('');
   
   const handlesubmit = async(e: React.FormEvent) => {
     e.preventDefault();
@@ -30,6 +32,7 @@ export default function Signup() {
       }, 2000);
     } else {
       console.error("Signup error:", data.error);
+      setError(data.error || 'Signup failed');
     }
   }
   const router = useRouter();
@@ -51,6 +54,7 @@ export default function Signup() {
                   <button type="button" className='text-red-500' onClick={()=> {router.push('Login')}}>Login</button>
                 </div>
                 <button type="submit" className=' border-2 border-red-500 focus:border-red-500fset-2 rounded-full bg-red-800 hover:bg-red-700 '>Next</button>
+                {error && <p className="text-sm text-red-400 mt-3">{error}</p>}
                 </form>
                 )}
 

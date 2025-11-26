@@ -112,8 +112,8 @@ export default function Slider() {
         <div className="absolute right-10 top-1/2 -translate-y-1/2 
                  md:w-[260px] md:h-[360px]
                 rounded-3xl overflow-hidden 
-                border border-white/20 shadow-xl ">
-          <Image fill src={anime?.images?.jpg?.image_url} alt={anime?.title} loading='lazy' className="object-contain object-top md:object-right " />
+                border-2 hover:border-red-600 hover:scale-105 transition-transform duration-300  shadow-xl ">
+          <Image fill src={anime?.images?.jpg?.image_url} alt={anime?.title} loading='lazy' className="object-cover object-top md:object-right " />
         </div>
  
 

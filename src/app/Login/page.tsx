@@ -61,7 +61,7 @@ export default function Login() {
         router.push("/");
       }
     } catch (error) {
-      setError("Something went wrong. Try again.");
+      setError((error as Error).message || "Something went wrong. Try again.");
       setLoading(false);
     }
   };
