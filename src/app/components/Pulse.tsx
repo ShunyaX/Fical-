@@ -1,7 +1,22 @@
 export default function Pulse() {
   return (
-    <div className="flex justify-center items-center h-40 w-full">
-      <div className="animate-spin rounded-full h-10 w-10 border-4 border-transparent border-t-red-500"></div>
+    <div className="flex items-center justify-center w-full h-40">
+      <div className="flex space-x-3">
+        
+        <span className="w-3 h-3 bg-red-500 rounded-full animate-bounce" />
+        
+        <span
+          className="w-3 h-3 bg-red-500 rounded-full animate-bounce"
+          style={{ animationDelay: "0.5s" }}
+        />
+
+        <span
+          className="w-3 h-3 bg-red-500 rounded-full animate-bounce"
+          style={{ animationDelay: "0.10s" }}
+        />
+
+      </div>
     </div>
+
   );
 }

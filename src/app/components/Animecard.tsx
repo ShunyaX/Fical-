@@ -7,17 +7,19 @@ import { useState } from "react";
 import savedchk from "@/hooks/savedchk";
 
 export interface AnimeCardProps {
-  mal_id: number;
+  mal_id?: number;
   title: string;
+  animeId?: number;
+  image?: string;
   images: {
     jpg: {
       image_url?: string;
       large_image_url?: string;
     };
   };
-  genres: { name: string }[];
-  score: number | null;
-  synopsis: string;
+  genres?: { name: string }[];
+  score?: number | null;
+  synopsis?: string;
   season?: number;
   episodes?: number;
   heading?: string;
@@ -38,6 +40,10 @@ export default function Animecard({
     router.push(`/anime/${anime.mal_id}`);
   };
   
+  const displayImage = anime.images?.jpg?.image_url || anime.image || "/placeholder.png";
+  const displayId = anime.mal_id || anime.animeId;
+  const displayTitle = anime.title;
+  const displayGenre = anime.genres?.[0]?.name || anime.genres?.[0] || "Anime";
   return (
     <div className="">
       <div className="flex items-center justify-between font-pop font-black">
@@ -56,7 +62,7 @@ export default function Animecard({
         <span className="relative w-40 h-60 rounded-lg overflow-hidden">
           <Image
             fill
-            src={anime.images.jpg.image_url || "/placeholder.png"}
+            src={displayImage}
             alt={anime.title}
             sizes="(max-width: 768px) 170px, 170px"
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"

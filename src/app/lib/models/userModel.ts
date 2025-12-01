@@ -15,7 +15,6 @@ const userSchema = new mongoose.Schema({
             mal_id: { type: Number, required: true },
             title: String,
             image: String,
-            score: Number
         }
     ],
 

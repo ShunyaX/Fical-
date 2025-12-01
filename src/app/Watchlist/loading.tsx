@@ -1,5 +1,4 @@
 import Loader from "../components/Loader";
-import Pulse from "../components/Pulse";
 
 export default function Loading() {
     return (

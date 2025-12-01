@@ -7,10 +7,10 @@ export default function useWatchlist(anime: any) {
   const { data: session } = useSession();
   const [saved, setSaved] = useState(false);
 
-  // Check if anime already saved
   useEffect(() => {
     const load = async () => {
       if (!session) return;
+
       const res = await fetch("/api/watchlist");
       const data = await res.json();
 
@@ -20,9 +20,8 @@ export default function useWatchlist(anime: any) {
     };
 
     load();
-  }, [session, anime.mal_id]);
+  }, [session]);
 
-  // Add / Remove Watchlist
   const toggleWatchlist = async (e?: any) => {
     if (e) e.preventDefault();
 
@@ -32,17 +31,20 @@ export default function useWatchlist(anime: any) {
     }
 
     if (saved) {
-      await fetch(`/api/watchlist/${anime.mal_id}`, {
-        method: "DELETE",
-      });
+      await fetch(`/api/watchlist/${anime.mal_id}`, { method: "DELETE" });
       setSaved(false);
     } else {
       await fetch(`/api/watchlist`, {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           animeId: anime.mal_id,
           title: anime.title,
           image: anime.images.jpg.image_url,
+          score: anime.score,
+          genres: anime.genres?.[0] || [],
+          episodes: anime.episodes,
+          synopsis: anime.synopsis,
         }),
       });
       setSaved(true);

@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-
-import {authOptions} from "@/app/lib/authOptions";
+import { authOptions } from "@/app/lib/authOptions";
 import connect from "@/app/lib/config";
 import Watchlist from "@/app/lib/models/watchlist";
 
 export async function GET() {
   await connect();
+
   const session: any = await getServerSession(authOptions);
   const userEmail = session?.user?.email;
 
@@ -18,24 +18,33 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  await connect();
-  const session: any = await getServerSession(authOptions);
-  const userEmail = session?.user?.email;
+  try {
+    await connect();
+    const session: any = await getServerSession(authOptions);
+    const userEmail = session?.user?.email;
 
-  if (!session || !userEmail)
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    if (!userEmail)
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const { animeId, title, image } = await req.json();
+    const { animeId, title, image, score, genres, episodes, synopsis } = await req.json();
 
-  const exists = await Watchlist.findOne({ userEmail, animeId });
-  if (exists) return NextResponse.json({ message: "Already added" });
+    const exists = await Watchlist.findOne({ userEmail, animeId });
+    if (exists) return NextResponse.json({ message: "Already added" });
 
-  await Watchlist.create({
-    userEmail,
-    animeId,
-    title,
-    image,
-  });
+    await Watchlist.create({
+      userEmail,
+      animeId,
+      title,
+      image,
+      score: score ||0,
+      genres:genres || [],
+      episodes:episodes || 0,
+      synopsis:synopsis || "",
+    });
 
-  return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    console.error("WATCHLIST POST ERROR:", err);
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  }
 }

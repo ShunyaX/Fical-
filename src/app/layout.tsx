@@ -3,6 +3,7 @@
   import Nav from "./components/nav";
   import "./globals.css";
 import SessionWrapper from "./SessionWrapper";
+import DisableConsole from "./DisableConsole";
 
   const nunito = Nunito({
     variable: "--font-Nunito",
@@ -37,6 +38,7 @@ import SessionWrapper from "./SessionWrapper";
         <body className={`${nunito.variable} ${karl.variable} ${pop.variable} bg-[#1D1616]`} >
           <SessionWrapper>
           <Nav/>
+          <DisableConsole />
            {children}
            </SessionWrapper>
 

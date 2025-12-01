@@ -1,21 +1,18 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  images : {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  images: {
     remotePatterns: [
       {
         protocol: "https",
         hostname: "cdn.myanimelist.net",
-        port: "",
         pathname: "/**",
       },
       {
         protocol: "https",
         hostname: "api.jikan.moe",
-        port: "",
         pathname: "/v4/**",
       },
-    ]
+    ],
   },
 };
 

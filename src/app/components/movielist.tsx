@@ -10,8 +10,8 @@ export default function Movielist({
 }) {
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 py-8 gap-14 px-12">
-      {animee.map((an) => (
-        <Animecard key={an.mal_id} anime={an} />
+      {animee.map((an,i) => (
+        <Animecard key={`${an.mal_id}-${i}`} anime={an} />
       ))}
     </div>
   );
