@@ -23,7 +23,7 @@ export default function Nav() {
       >
         <div className="text-white md:text-2xl text-xl font-pop">
           <Link href="/" className="md:text-xl text-xl">
-            <span className="text-yellow-500 text-2xl">F</span>ical
+            <Image src="/logo.png" alt="Fical Logo" width={50} height={50} className="object-cover ml-2" />
           </Link>
         </div>
         <ul className="space-x-4 hidden md:flex font-pop">

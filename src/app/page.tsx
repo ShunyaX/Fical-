@@ -5,6 +5,7 @@ import Homeloader from './components/Homeloader';
 import connect from './lib/config';
 import Pulse from './components/Pulse';
 import Slider from './components/Slider';
+import Footer from './components/Footer';
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -31,6 +32,7 @@ export default async function Home() {
           <Homeloader />
         </Suspense>
       </div>
+      <Footer />
 
     </div>
   );
