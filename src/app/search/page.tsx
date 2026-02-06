@@ -46,7 +46,7 @@ export default function Search() {
     };
 
     if (query.trim()) fetchAnime();
-  }, [query, acttag,input]);
+  }, [query, acttag]);
 
   return (
     <div className="min-h-screen py-5">

@@ -13,7 +13,8 @@ export async function GET() {
   if (!session || !userEmail)
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const items = await Watchlist.find({ userEmail });
+  const items = await Watchlist.find({ userEmail })
+      .lean();
   return NextResponse.json({ items });
 }
 
@@ -25,8 +26,10 @@ export async function POST(req: Request) {
 
     if (!userEmail)
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    
 
-    const { animeId, title, image, score, genres, episodes, synopsis } = await req.json();
+    const body = await req.json();
+    const { animeId, title, image, score, genres, episodes, synopsis } = body;
 
     const exists = await Watchlist.findOne({ userEmail, animeId });
     if (exists) return NextResponse.json({ message: "Already added" });

@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Animecard from "../components/Animecard";
-import Movielist from "../components/movielist";
+import { useWatchlist } from "../context/WatchlistContext";
+import { useSession } from "next-auth/react";
 
 interface watchlist {
   _id: string;
@@ -16,26 +17,28 @@ interface watchlist {
 }
 
 export default function WatchlistPage() {
+  const {data : session} = useSession();
+  const {ids} = useWatchlist();
+
   const [items, setItems] = useState<watchlist[]>([]);
 
   useEffect(() => {
-    async function fetchList() {
-      const res = await fetch("/api/watchlist");
-      const data = await res.json();
-      setItems(data.items || []);
+    if(!session) return;
+    if (session) {
+      fetch("/api/watchlist")
+        .then(res => res.json())
+        .then(data => setItems(data.items || []));
     }
+  }, [session]);
 
-    fetchList();
-  }, []);
-
-  console.log(items);
+  const watchlistAnime = items.filter(item => ids.includes(item.animeId));
 
   return (
     <div className="p-8 text-white">
       <h1 className="text-2xl font-bold mb-4">Your Watchlist</h1>
 
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-       {items.map((items) => (
+       {session && watchlistAnime.map((items) => (
             <Animecard key={items._id} anime={items as any} />
           ))}
       </div>

@@ -4,6 +4,7 @@
   import "./globals.css";
 import SessionWrapper from "./SessionWrapper";
 import DisableConsole from "./DisableConsole";
+import { WatchlistProvider } from "./context/WatchlistContext";
 
   const nunito = Nunito({
     variable: "--font-Nunito",
@@ -37,9 +38,11 @@ import DisableConsole from "./DisableConsole";
       <html lang="en" >
         <body className={`${nunito.variable} ${karl.variable} ${pop.variable} bg-[#1D1616]`} >
           <SessionWrapper>
+            <WatchlistProvider>
           <Nav/>
           <DisableConsole />
            {children}
+            </WatchlistProvider>
            </SessionWrapper>
 
           

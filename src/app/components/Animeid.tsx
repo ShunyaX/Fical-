@@ -3,11 +3,14 @@ import React from 'react';
 import Image from 'next/image';
 import { useState } from 'react';
 import session from 'next-auth/next';
-import savedchk from '@/hooks/savedchk';
+import { useWatchlist } from '../context/WatchlistContext';
+import Pulse from './Pulse';
 
 export default function Animeid({anime}:{anime:any}) {
   const [open, isopen] = useState(false);
-  const { saved, toggleWatchlist } = savedchk(anime);
+  const { ids,toggleWatchlist, } = useWatchlist();
+  if (!anime) return <div className="text-white"><Pulse /></div>;
+  const isSaved = ids?.includes(anime.mal_id || anime.animeId);
 
   return (
     <div className="relative overflow-hidden px-10 flex flex-col items-center h-full md:h-[530px] ">
@@ -26,7 +29,7 @@ export default function Animeid({anime}:{anime:any}) {
         <div className=" absolute inset-0 -z-10 bg-gradient-to-b from-black/10 to-transparent pb-10 hidden sm:hidden md:block"></div>    
           
           <div className='hidden md:flex justify-end items-center w-full -z-10 md:mt-5'>
-        <img  alt={anime.title} src={anime?.images?.jpg.large_image_url} className="md:drop-shadow-3xl shadow-cyan-500/50 border-4 rounded-3xl max-w-80 mt-4 mr-5 " />
+        <img  alt={anime?.title} src={anime.images.jpg.large_image_url} className="md:drop-shadow-3xl shadow-cyan-500/50 border-4 rounded-3xl max-w-80 mt-4 mr-5 " />
           </div>
           
           
@@ -34,14 +37,14 @@ export default function Animeid({anime}:{anime:any}) {
         
         <div className="flex flex-col items-center justify-end md:items-start text-xs font-pop mt-64 md:mt-0 md:absolute md:top-32 md:left-12 ">
           <div className='w-[90%] md:w-[580px]'>
-          <h1 className=" font-medium text-2xl md:text-4xl mb-4 text-center md:text-left text-white">{anime.title}</h1>
-           <div className='text-xs flex gap-1 items-center justify-center md:justify-start '>
-          <span className=" text-white bg-red-900/20 rounded-md p-1">{anime.type} - {anime.episodes} episodes</span>
-          <span className=" text-white bg-red-900/20 rounded-md p-1">A</span>
-          <span className=" text-white rounded-md">{}</span>
-          <span className=" text-white bg-red-900/20 rounded-md p-1">*comedy,drama, sci-fi</span>
+          <h1 className=" font-semibold text-3xl md:text-4xl mb-4 text-center md:text-left text-white">{anime?.title}</h1>
+           <div className='text-[12px] text-left flex items-center justify-center md:justify-start  text-gray-600'>
+          <span className=" text-white bg-gray-700 rounded-md p-1">•{anime.rating || "N/A"}</span>
+          <span className=" text-white rounded-md p-1">•{anime.type}-{anime.episodes} episodes</span>
+          <span className=" text-yellow-400  rounded-md p-1">⭐{anime.score || "N/A"}</span>
+          <span className=" text-white text underline nonunderline rounded-md p-1">•{anime.genres.map((g:any) => g.name).join(",• ") || "N/A"}</span>
           </div>
-          <p className="text-white mt-2 line-clamp-3 text-wrap">{anime.synopsis}</p>
+          <p className="text-gray-300/90 text-xs font-medium line-clamp-4 text-wrap mt-5">{anime.synopsis}</p>
           
           
 
@@ -49,12 +52,12 @@ export default function Animeid({anime}:{anime:any}) {
         <div className=" text-xs flex gap-4 mt-2  md:flex items-start justify-start">
           <div>
             <div className=" absolute inset-0 -z-10 bg-gradient-to-b from-black/10 to-black pb-10 md:hidden"></div>  
-            <button className="bg-red-600 text-white p-3 w-[250px] rounded-xl mt-4 flex items-center justify-center font-pop gap-5"><Image width={20} height={20} alt='play.png' src="/play.png" className=" w-6 h-6"/>Start watching E1</button>
+            <button className="bg-red-600 text-white p-3 w-[250px] md:w-[350px] rounded-xl mt-4 flex items-center justify-center font-pop gap-5"><Image width={20} height={20} alt='play.png' src="/play.png" className=" w-6 h-6"/>Start watching E1</button>
           </div>
-          <button className="bg-transparent hover:bg-red-600 border-red-600 border-2 text-white p-3 w-12 rounded-xl mt-4 flex items-center justify-center font-pop gap-2"><Image width={20} height={20} onClick={toggleWatchlist} alt='add.png' src={saved ? "/saved.png" : "/add.png"} className="w-5 h-5"/></button>
+          <button className="bg-transparent hover:bg-red-600 border-red-600 border-2 text-white p-3 w-12 rounded-xl mt-4 flex items-center justify-center font-pop gap-2"><Image width={20} height={20} onClick={() => toggleWatchlist(anime)} alt='add.png' src={isSaved ? "/saved.png" : "/add.png"} className="w-5 h-5"/></button>
           
         </div>
-        <button className="bg-blue-900 text-white p-3 w-full md:w-[315px] rounded-xl mt-4 flex items-center justify-center font-pop gap-2" onClick={()=>{isopen(true)}}><Image width={20} height={20} alt='info.png' src="/info.png" className=" w-6 h-6"/>More Details</button>
+        <button className="bg-blue-900 text-white p-3 w-full md:w-[415px] rounded-xl mt-4 flex items-center justify-center font-pop gap-2" onClick={()=>{isopen(true)}}><Image width={20} height={20} alt='info.png' src="/info.png" className=" w-6 h-6"/>More Details</button>
         </div>
 
          {open && (

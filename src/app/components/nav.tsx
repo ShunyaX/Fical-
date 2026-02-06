@@ -63,15 +63,9 @@ export default function Nav() {
             />
           </button>
 
-          <button
+          {session && <button
             className=" text-white  rounded-md h-8 md: "
-            onClick={() => {
-              if (session) {
-                router.push("/Watchlist");
-              } else {
-                router.push("/Login");
-              }
-            }}
+            onClick={session ? () => router.push("/Watchlist"):() => router.push("/Login")}
           >
             <Image
               alt="search"
@@ -80,7 +74,7 @@ export default function Nav() {
               height={200}
               className="w-full h-full"
             />
-          </button>
+          </button>}
 
           <button
             className="md:hidden text-white"
